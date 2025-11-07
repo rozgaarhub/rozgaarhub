@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="hi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>RozgaarHub — नये तरीके से नौकरी ढूँढें</title>
+  <meta name="description" content="RozgaarHub — छोटे शहरों और ग्रामीण क्षेत्रों के लिए आसान नौकरी पोर्टल।" />
+  <meta name="robots" content="index,follow" />
+  <style>
+    /* Unique look: teal + orange theme, different spacing & typography */
+    :root{--primary:#0f766e;--accent:#f97316;--muted:#64748b;--bg:#fbfdfe;--card:#ffffff}
+    *{box-sizing:border-box}html,body{height:100%;margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,'Noto Sans',Arial;background:var(--bg);color:#022c2a}
+    .wrap{max-width:1150px;margin:26px auto;padding:18px}
+
+    header{display:flex;align-items:center;justify-content:space-between;gap:12px}
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo-svg{width:48px;height:48px;border-radius:10px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--primary),#2dd4bf);color:#fff;font-weight:800}
+    .nav a{margin-left:14px;color:var(--muted);text-decoration:none;font-size:14px}
+
+    .hero{display:flex;gap:20px;background:linear-gradient(180deg,#ffffff,rgba(15,118,110,0.03));padding:26px;border-radius:14px;align-items:center;margin-top:18px}
+    .hero-left{flex:1}
+    .hero h1{margin:0 0 8px;font-size:30px}
+    .hero p{margin:0 0 14px;color:var(--muted)}
+
+    .searchbar{display:flex;gap:8px;flex-wrap:wrap}
+    .searchbar input, .searchbar select{padding:12px;border-radius:10px;border:1px solid #e6eef0;min-width:160px}
+    .search-btn{background:var(--accent);border:0;padding:12px 16px;border-radius:10px;color:#fff;cursor:pointer}
+
+    .stats{background:#fff;padding:12px;border-radius:10px;box-shadow:0 8px 30px rgba(4,15,14,0.04);text-align:center}
+    .stats .num{font-size:26px;font-weight:700}
+
+    .layout{display:grid;grid-template-columns:1fr 340px;gap:18px;margin-top:20px}
+    .card{background:var(--card);padding:14px;border-radius:12px;box-shadow:0 6px 18px rgba(2,6,23,0.05)}
+    .job-item{display:flex;justify-content:space-between;align-items:center;padding:12px;border-radius:10px;border:1px solid #f1f5f6;margin-bottom:10px}
+    .job-item .left{max-width:70%}
+    .meta{color:var(--muted);font-size:13px}
+
+    .sidebar .category{display:flex;justify-content:space-between;padding:10px;border-radius:8px}
+
+    footer{margin-top:28px;text-align:center;color:var(--muted)}
+
+    /* small screens */
+    @media(max-width:920px){.layout{grid-template-columns:1fr}.hero{flex-direction:column}.nav{display:none}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <div class="logo-svg">RH</div>
+        <div>
+          <div style="font-weight:800">RozgaarHub</div>
+          <div style="font-size:12px;color:var(--muted)">छोटे शहरों के लिए जॉब पोर्टल</div>
+        </div>
+      </div>
+      <nav class="nav">
+        <a href="#">होम</a>
+        <a href="#jobs">नौकरियाँ</a>
+        <a href="#post">नियोक्ता</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div class="hero-left">
+        <h1>सही नौकरी — तेज़ ढंग से</h1>
+        <p>RozgaarHub पर छोटे शहर/गाँव के उम्मीदवारों के लिए स्किल‑फोकस्ड रिक्तियाँ। मोबाइल‑पहुँच को ध्यान में रखकर बनाया गया।</p>
+
+        <div class="searchbar" role="search">
+          <input id="q2" placeholder="जॉब, स्किल या कंपनी (उदा. 'teacher', 'accountant')" />
+          <select id="loc2">
+            <option value="">सभी लोकेशन</option>
+            <option>हरियाणा</option>
+            <option>उत्तर प्रदेश</option>
+            <option>राजस्थान</option>
+            <option>बिहार</option>
+          </select>
+          <button class="search-btn" onclick="searchJobs()">खोजें</button>
+        </div>
+        <div style="margin-top:10px;color:var(--muted);font-size:13px">दो शब्द में लिखें — जैसे "tally accountant jaipur"</div>
+      </div>
+
+      <aside style="width:260px">
+        <div class="stats">
+          <div style="font-size:12px;color:var(--muted)">सक्रिय रिक्तियाँ</div>
+          <div class="num">8,742</div>
+          <div style="margin-top:8px;color:var(--muted);font-size:13px">नए: 248 इस हफ्ते</div>
+        </div>
+      </aside>
+    </section>
+
+    <div class="layout">
+      <main>
+        <div id="jobs" class="card">
+          <h2 style="margin-top:0">नौकरियाँ</h2>
+          <div id="list">
+            <!-- JS will render unique job items here -->
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:12px">
+          <h3 style="margin-top:0">नियोक्ता निर्देश</h3>
+          <p style="color:var(--muted)">नौकरी पोस्ट करने से पहले हमारा नियम‑पालन पेज पढ़ें — स्पैम पोस्ट न करें।</p>
+          <button class="search-btn" onclick="openPost()">नौकरी पोस्ट करें</button>
+        </div>
+      </main>
+
+      <aside class="sidebar">
+        <div class="card">
+          <h3>लोकप्रिय श्रेणियाँ</h3>
+          <div class="category">कृषि <span>1,102</span></div>
+          <div class="category">आईटी सपोर्ट <span>930</span></div>
+          <div class="category">ट्रेड्स/मैन्युफैक्चरिंग <span>712</span></div>
+          <div class="category">शिक्षण <span>524</span></div>
+        </div>
+
+        <div class="card" style="margin-top:12px">
+          <h3>Contact</h3>
+          <p style="color:var(--muted);font-size:14px">help@rozgaarhub.example</p>
+        </div>
+
+        <!-- Recommended ad slot for monetization -->
+        <div class="card" style="margin-top:12px">
+          <h3>Sponsored</h3>
+          <div id="ad-slot-1" style="min-height:90px;display:flex;align-items:center;justify-content:center">Adsterra slot</div>
+        </div>
+      </aside>
+    </div>
+
+    <footer>
+      © <span id="yr"></span> RozgaarHub — सभी अधिकार सुरक्षित
+    </footer>
+  </div>
+
+  <!-- Simple post modal -->
+  <div id="modal" style="position:fixed;inset:0;background:rgba(2,6,23,0.45);display:none;align-items:center;justify-content:center">
+    <div style="width:700px;max-width:96%;background:#fff;border-radius:12px;padding:18px">
+      <h3 style="margin:0 0 8px">नौकरी पोस्ट करें</h3>
+      <p style="color:var(--muted);margin:0 0 12px">यह डेमो फ्रंट‑एंड है — पोस्ट को सुरक्षित रूप से सेव करने के लिए बैकएण्ड चाहिए।</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+        <input id="t2" placeholder="जॉब टाइटल" />
+        <input id="c2" placeholder="कम्पनी नाम" />
+        <input id="l2" placeholder="लोकेशन" />
+        <input id="s2" placeholder="सैलरी (वैकल्पिक)" />
+        <textarea id="d2" placeholder="नौकरी विवरण" style="grid-column:1/-1"></textarea>
+      </div>
+      <div style="margin-top:10px;display:flex;gap:8px;justify-content:flex-end">
+        <button onclick="closePost()">बंद करें</button>
+        <button class="search-btn" onclick="submitPost()">सबमिट</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Placeholder: Adsterra integration instructions & example -->
+  <!-- IMPORTANT: Replace the 'INSERT_ADSTERRA_CODE_HERE' with the actual code Adsterra gives you. -->
+  <script>
+    // Demo jobs (different wording & items than previous template)
+    const jobsData = [
+      {title:'Field Sales Agent',company:'AgroLink',loc:'Alwar',type:'Part-time',posted:'3 दिन पहले'},
+      {title:'Tally Operator',company:'LocalBooks',loc:'Jaipur',type:'Full-time',posted:'1 दिन पहले'},
+      {title:'Mobile Repair Technician',company:'FixNow',loc:'Bikaner',type:'Full-time',posted:'6 घंटे पहले'}
+    ];
+
+    function render(){
+      const container = document.getElementById('list'); container.innerHTML='';
+      jobsData.forEach(j=>{
+        const item = document.createElement('div'); item.className='job-item';
+        item.innerHTML = `<div class="left"><div style="font-weight:700">${j.title}</div><div class="meta">${j.company} • ${j.loc} • ${j.type}</div></div><div style="text-align:right"><div class="meta">${j.posted}</div><div style="margin-top:8px"><button class="search-btn" onclick="applyDemo('${j.title.replace(/'/g,'')}')">Apply</button></div></div>`;
+        container.appendChild(item);
+      });
+    }
+    render();
+
+    function searchJobs(){
+      const q = document.getElementById('q2').value.toLowerCase();
+      const loc = document.getElementById('loc2').value.toLowerCase();
+      const res = jobsData.filter(j=> (j.title.toLowerCase().includes(q) || j.company.toLowerCase().includes(q)) && (loc=='' || j.loc.toLowerCase().includes(loc)) );
+      document.getElementById('list').innerHTML = res.length? '': '<div style="color:var(--muted)">कोई जॉब नहीं मिला</div>';
+      if(res.length) renderFiltered(res);
+    }
+    function renderFiltered(list){ const container=document.getElementById('list'); container.innerHTML=''; list.forEach(j=>{const it=document.createElement('div'); it.className='job-item'; it.innerHTML=`<div class="left"><div style="font-weight:700">${j.title}</div><div class="meta">${j.company} • ${j.loc}</div></div><div style="text-align:right">${j.posted}<div style="margin-top:8px"><button class="search-btn" onclick="applyDemo('${j.title.replace(/'/g,'')}')">Apply</button></div></div>`; container.appendChild(it); }); }
+    function applyDemo(t){ alert(t + ' के लिए आवेदन (डेमो) — बैकएण्ड जोड़ें।'); }
+
+    function openPost(){ document.getElementById('modal').style.display='flex'; }
+    function closePost(){ document.getElementById('modal').style.display='none'; }
+    function submitPost(){ const title=document.getElementById('t2').value; if(!title){alert('कृपया टाइटल डालें');return} alert('पोस्ट सबमिट की गई (डेमो)।'); closePost(); }
+    document.getElementById('yr').textContent = new Date().getFullYear();
+
+    // ====== Adsterra placeholder ======
+    // Best practice: place ad script near the ad container(s). Replace below with Adsterra code.
+    (function loadAdsterraPlaceholder(){
+      const el = document.getElementById('ad-slot-1');
+      el.innerHTML = '<div style="font-size:13px;color:var(--muted)">Adsterra Placeholder — अपने Adsterra स्क्रिप्ट से बदलें</div>';
+    })();
+  </script>
+
+  <!--
+    ADSTERAA INTEGRATION NOTES (do not forget):
+    1) Sign up at Adsterra and create zones (recommended: responsive banner + native unit).
+    2) They will give you JS snippet(s). Paste the snippet(s) in the <head> or right before </body>, and place the ad container div(s) where you want ads (e.g., #ad-slot-1).
+    3) For better RPM: use one anchor/footer ad, one in‑content/native unit, and one sidebar unit.
+    4) Respect privacy: show a cookie/consent notice if your audience is in GDPR regions.
+    5) Test on mobile — avoid too many heavy ads above the fold.
+  -->
+</body>
+</html>
